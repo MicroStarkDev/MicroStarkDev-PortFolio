@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../components/CSS/Experience.css';
-import { experienceData } from '../constants'; // Importing experience data
+import { experienceData } from '../constants';
 
 const Experience = () => {
   const itemsRef = useRef([]);
@@ -9,7 +9,8 @@ const Experience = () => {
   const [isSectionVisible, setIsSectionVisible] = useState(false);
 
   useEffect(() => {
-    const currentSection = sectionRef.current; // store locally
+    const currentSection = sectionRef.current; // safely store ref
+    const currentItems = itemsRef.current.slice(); // clone ref array
 
     const sectionObserver = new IntersectionObserver(
       ([entry]) => {
@@ -25,7 +26,7 @@ const Experience = () => {
     const itemObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const index = itemsRef.current.indexOf(entry.target);
+          const index = currentItems.indexOf(entry.target);
           if (entry.isIntersecting) {
             setVisibleItems((prev) => [...new Set([...prev, index])]);
           }
@@ -37,12 +38,11 @@ const Experience = () => {
       }
     );
 
-    // Observe only existing refs
-    itemsRef.current.forEach((el) => el && itemObserver.observe(el));
+    currentItems.forEach((el) => el && itemObserver.observe(el));
 
     return () => {
       if (currentSection) sectionObserver.unobserve(currentSection);
-      itemsRef.current.forEach((el) => el && itemObserver.unobserve(el));
+      currentItems.forEach((el) => el && itemObserver.unobserve(el));
     };
   }, []);
 
