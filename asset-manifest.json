@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/MicroStarkDev-PortFolio/static/css/main.6fde9198.css",
+    "main.js": "/MicroStarkDev-PortFolio/static/js/main.cef4549f.js",
+    "static/js/453.1407b060.chunk.js": "/MicroStarkDev-PortFolio/static/js/453.1407b060.chunk.js",
+    "static/media/banner-bg.png": "/MicroStarkDev-PortFolio/static/media/banner-bg.cc1273af450504afe755.png",
+    "index.html": "/MicroStarkDev-PortFolio/index.html",
+    "main.6fde9198.css.map": "/MicroStarkDev-PortFolio/static/css/main.6fde9198.css.map",
+    "main.cef4549f.js.map": "/MicroStarkDev-PortFolio/static/js/main.cef4549f.js.map",
+    "453.1407b060.chunk.js.map": "/MicroStarkDev-PortFolio/static/js/453.1407b060.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6fde9198.css",
+    "static/js/main.cef4549f.js"
+  ]
+}
