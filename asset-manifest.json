@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/MicroStarkDev-PortFolio/static/css/main.6fde9198.css",
-    "main.js": "/MicroStarkDev-PortFolio/static/js/main.cef4549f.js",
-    "static/js/453.1407b060.chunk.js": "/MicroStarkDev-PortFolio/static/js/453.1407b060.chunk.js",
+    "main.css": "/MicroStarkDev-PortFolio/static/css/main.aa28f6a9.css",
+    "main.js": "/MicroStarkDev-PortFolio/static/js/main.ee63cf65.js",
+    "static/js/488.21b970f5.chunk.js": "/MicroStarkDev-PortFolio/static/js/488.21b970f5.chunk.js",
     "static/media/banner-bg.png": "/MicroStarkDev-PortFolio/static/media/banner-bg.cc1273af450504afe755.png",
     "index.html": "/MicroStarkDev-PortFolio/index.html",
-    "main.6fde9198.css.map": "/MicroStarkDev-PortFolio/static/css/main.6fde9198.css.map",
-    "main.cef4549f.js.map": "/MicroStarkDev-PortFolio/static/js/main.cef4549f.js.map",
-    "453.1407b060.chunk.js.map": "/MicroStarkDev-PortFolio/static/js/453.1407b060.chunk.js.map"
+    "main.aa28f6a9.css.map": "/MicroStarkDev-PortFolio/static/css/main.aa28f6a9.css.map",
+    "main.ee63cf65.js.map": "/MicroStarkDev-PortFolio/static/js/main.ee63cf65.js.map",
+    "488.21b970f5.chunk.js.map": "/MicroStarkDev-PortFolio/static/js/488.21b970f5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6fde9198.css",
-    "static/js/main.cef4549f.js"
+    "static/css/main.aa28f6a9.css",
+    "static/js/main.ee63cf65.js"
   ]
 }
