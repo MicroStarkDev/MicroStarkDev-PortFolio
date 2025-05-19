@@ -8,7 +8,6 @@ import Experience from './components/Experience';
 import Projects from './components/Projects';
 import GitHub from './components/GitHub';
 import Contact from './components/Contact';
-import ThemeToggle from './components/ThemeToggle';
 import Footer from './components/Footer';
 
 function App() {
@@ -22,7 +21,6 @@ function App() {
       <Projects />
       <GitHub />
       <Contact />
- 
       <Footer />
        
     </div>

@@ -9,6 +9,7 @@
 .projects .section-title {
   margin-bottom: 3rem;
   text-align: center;
+  padding: 0 1rem;
 }
 
 .projects .section-title h2 {
@@ -30,13 +31,23 @@
   border-radius: 2px;
 }
 
+.section-subtitle {
+  font-size: 1rem;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto 2rem auto;
+  text-align: center;
+  padding: 0 1rem;
+}
+
 /* Projects Container */
 .projects-container {
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
+  padding: 0 1rem;
 }
 
 /* Project Card */
@@ -61,6 +72,7 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Card Content */
 .project-header {
   margin-bottom: 1rem;
 }
@@ -73,6 +85,7 @@
 
 .project-meta {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   font-size: 0.9rem;
   color: var(--text-secondary);
@@ -91,6 +104,7 @@
   font-weight: 600;
 }
 
+/* Technologies */
 .project-tech {
   margin-bottom: 1rem;
 }
@@ -110,6 +124,7 @@
   font-size: 0.85rem;
 }
 
+/* Highlights */
 .project-highlights {
   margin: 1.5rem 0;
   padding-left: 1.2rem;
@@ -128,6 +143,7 @@
   color: var(--primary-color);
 }
 
+/* Tags */
 .project-tags {
   display: flex;
   flex-wrap: wrap;
@@ -143,29 +159,29 @@
   font-size: 0.8rem;
   font-weight: 500;
 }
-.section-subtitle {
-  font-size: 1rem;
-  color: #666;
-  max-width: 700px;
-  margin-top: 0.5rem;
-  margin-left: 25rem;
-  margin-bottom: 2rem;
-}
 
 /* Responsive Design */
 @media (max-width: 992px) {
   .projects-container {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+
+  .projects .section-title h2 {
+    font-size: 2.2rem;
   }
 }
 
 @media (max-width: 768px) {
   .projects.section {
-    padding: 3rem 1.5rem;
+    padding: 3rem 1rem;
   }
-  
+
   .projects .section-title h2 {
     font-size: 2rem;
+  }
+
+  .project-card {
+    padding: 1.2rem;
   }
 }
 
@@ -173,12 +189,17 @@
   .projects-container {
     grid-template-columns: 1fr;
   }
-  
+
   .projects .section-title h2 {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
   }
-  
+
   .project-card {
-    padding: 1.2rem;
+    padding: 1rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+    margin: 0 auto 1.5rem auto;
   }
 }

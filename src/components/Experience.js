@@ -58,7 +58,11 @@ const Experience = () => {
         {experienceData.map((item, index) => (
           <div
             key={index}
-            className={`timeline-item ${visibleItems.includes(index) ? 'visible' : ''}`}
+           className={`timeline-item 
+  ${visibleItems.includes(index) ? 'visible' : ''} 
+  ${visibleItems.includes(index) && isSectionVisible ? (index % 2 === 0 ? 'animate__animated animate__flipInX' : 'animate__animated animate__flipInY') : ''} 
+  animate__delay-${index}s`}
+
             ref={(el) => (itemsRef.current[index] = el)}
             aria-labelledby={`experience-${index}`}
           >

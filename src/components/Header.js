@@ -38,9 +38,7 @@ const Header = () => {
       <div className="header-container">
         <a
           href="#home"
-          className={`logo animate__animated ${
-            isAnimating ? 'animate__wobble animate__delay-1s animate__infinite animate__slower' : ''
-          }`}>
+          className={`logo`}>
          Welcome to My Portfolio
         </a>
 
