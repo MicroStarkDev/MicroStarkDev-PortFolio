@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import '../components/CSS/Contact.css';
 import { showAlert } from '../constants';
-import animate from 'animate.css';
 const Contact = () => {
   const sectionRef = useRef(null);
   const formRef = useRef(null);

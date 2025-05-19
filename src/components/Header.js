@@ -16,7 +16,6 @@ const Header = () => {
       const contactSection = document.getElementById('contact');
       const stopAt = contactSection?.offsetTop || document.body.scrollHeight;
 
-      // Animate only if user hasn't reached contact section
       if (scrollY < stopAt - 200) {
         setIsAnimating(true);
       } else {
@@ -29,17 +28,14 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    // Prevent background scroll when menu is open
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'unset';
   }, [isMenuOpen]);
 
   return (
-    <header className="site-header">
+    <header className={`site-header ${isAnimating ? 'animating' : ''}`}>
       <div className="header-container">
-        <a
-          href="#home"
-          className={`logo`}>
-         Welcome to My Portfolio
+        <a href="#home" className="logo">
+          Welcome to My Portfolio
         </a>
 
         <button
