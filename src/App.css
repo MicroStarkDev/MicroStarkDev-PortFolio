@@ -1,38 +1,133 @@
-.App {
-  text-align: center;
+:root {
+  /* Core Colors */
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --text-secondary: #666666;
+  
+  /* Primary Colors */
+  --primary-color: #3a86ff;
+  --primary-dark: #2563eb;
+  --primary-light: #ebf4ff;
+  --accent-color: #8338ec;
+  
+  /* Component Colors */
+  --card-bg: #ffffff;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --footer-bg: #2d3748;
+  --footer-text: #ffffff;
+  --footer-accent: #63b3ed;
+  
+  /* UI Elements */
+  --timeline-line: #e2e8f0;
+  --tag-bg: #f0f4f8;
+  --tag-text: #334155;
+  --filter-bg: #f0f4f8;
+  --progress-bg: #f0f4f8;
+  
+  /* Theme Toggle */
+  --toggle-bg: #e0e0e0;
+  --toggle-bg-dark: #4d4d4d;
+  --toggle-thumb: #ffffff;
+  --toggle-thumb-dark: #f5f5f5;
+}
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+label.required::after {
+  content: " *";
+  color: red;
+  font-weight: bold;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Custom Alert  Section */
+.custom-alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 5, 5, 0.75);
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.App-link {
-  color: #61dafb;
+.custom-alert-box {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  position: relative;
+  text-align: center;
+  width: 350px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: popUp 0.4s ease-in-out;
+  transition: all 0.3s ease;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.custom-alert-box.success {
+  border-left: 8px solid #28a745;
+  box-shadow: 0 0 25px rgba(40, 167, 69, 0.6);
+}
+
+.custom-alert-box.error {
+  border-left: 8px solid #dc3545;
+  box-shadow: 0 0 25px rgba(220, 53, 69, 0.6);
+}
+
+.custom-alert-icon {
+  width:40% ;
+  height: 40%;
+  margin-bottom: 20px;
+}
+
+.custom-alert-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.custom-alert-message {
+  font-size: 20px;
+  color: #0f0f0f;
+  margin-bottom: 10px;
+}
+
+.custom-alert-close {
+  border: 1px solid #0e0e0e;
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  color: #e10909;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@keyframes popUp {
+  0% {
+    transform: scale(0.85);
+    opacity: 0;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  100% {
+    background-color: rgba(5, 5, 5, 0.75);
   }
 }
