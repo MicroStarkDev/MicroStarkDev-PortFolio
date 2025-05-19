@@ -1,112 +1,125 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../components/CSS/Skills.css';
-import { skills } from '../constants';
+import '../components/CSS/Projects.css';
+import { projects } from '../constants';
+import 'animate.css';
 
-const Skills = () => {
+const Projects = () => {
   const sectionRef = useRef(null);
-  const [visibleSkills, setVisibleSkills] = useState([]);
-  const [isSectionVisible, setIsSectionVisible] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('All');
-
-  const categories = [...new Set(skills.map(skill => skill.category))];
+  const [sectionVisible, setSectionVisible] = useState(false);
+  const [visibleCards, setVisibleCards] = useState([]);
 
   useEffect(() => {
     const currentSection = sectionRef.current;
 
+    // Observe the whole section for visibility
     const sectionObserver = new IntersectionObserver(
       ([entry]) => {
-        setIsSectionVisible(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setSectionVisible(true);
+        }
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
 
-    const skillObserver = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          const skillName = entry.target.getAttribute('data-skill-name');
-          if (entry.isIntersecting && skillName) {
-            setVisibleSkills(prev => {
-              if (!prev.includes(skillName)) {
-                return [...prev, skillName];
-              }
-              return prev;
-            });
+    if (currentSection) {
+      sectionObserver.observe(currentSection);
+    }
+
+    return () => {
+      if (currentSection) {
+        sectionObserver.unobserve(currentSection);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!sectionVisible) return;
+
+    const currentSection = sectionRef.current;
+    if (!currentSection) return;
+
+    // Observe each project card to trigger animation on visibility
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const cards = Array.from(currentSection.querySelectorAll('.project-card'));
+          const index = cards.indexOf(entry.target);
+
+          if (entry.isIntersecting && index !== -1) {
+            setVisibleCards((prev) => [...new Set([...prev, index])]);
           }
         });
       },
       {
         threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px',
+        rootMargin: '0px 0px -100px 0px',
       }
     );
 
-    if (currentSection) {
-      sectionObserver.observe(currentSection);
-      const cards = currentSection.querySelectorAll('.skill-card');
-      cards.forEach(card => skillObserver.observe(card));
-    }
+    const cards = currentSection.querySelectorAll('.project-card');
+    cards.forEach((card) => observer.observe(card));
 
     return () => {
-      if (currentSection) {
-        sectionObserver.disconnect();
-        const cards = currentSection.querySelectorAll('.skill-card');
-        cards.forEach(card => skillObserver.unobserve(card));
-      }
+      cards.forEach((card) => observer.unobserve(card));
     };
-  }, []);
-
-  const filteredSkills =
-    activeCategory === 'All'
-      ? skills
-      : skills.filter(skill => skill.category === activeCategory);
+  }, [sectionVisible]);
 
   return (
     <section
-      id="skills"
+      id="projects"
       ref={sectionRef}
-      className={`skills section ${isSectionVisible ? 'visible' : ''}`}
-      aria-labelledby="skills-heading"
+      className="projects section"
+      aria-labelledby="projects-heading"
     >
       <div className="section-title">
-        <h2 id="skills-heading">Skills</h2>
+        <h2 id="projects-heading">Projects</h2>
+        <p className="section-subtitle">
+          Here are some of the <strong>most recent and active projects</strong> I've been working on,
+          showcasing my experience with Java, Spring Boot, Microservices, and React.
+        </p>
       </div>
 
-      <div className="skills-filter">
-        {['All', ...categories].map(category => (
-          <button
-            key={category}
-            className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
-            onClick={() => setActiveCategory(category)}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
+      <div className="projects-container">
+        {projects.map((project, index) => {
+          const isVisible = visibleCards.includes(index);
+          const animationClass = isVisible
+            ? `animate__animated ${index % 2 === 0 ? 'animate__bounceInRight' : 'animate__bounceInLeft'}`
+            : '';
 
-      <div className="skills-container">
-        {filteredSkills.map((skill, index) => {
-          const isVisible = visibleSkills.includes(skill.name);
           return (
             <div
-              key={skill.name}
-              data-skill-name={skill.name}
-              className={`skill-card ${isVisible ? 'visible' : ''}`}
-              style={{ transitionDelay: `${index * 0.05}s` }}
+              key={index}
+              className={`project-card ${isVisible ? 'visible' : ''} ${animationClass}`}
+              style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <div className="skill-info">
-                <span className="skill-name">{skill.name}</span>
-                <span className="skill-level">{skill.level}%</span>
+              <div className="project-header">
+                <h3>{project.title}</h3>
+                <div className="project-meta">
+                  <span className="project-duration">{project.duration}</span>
+                  {project.domain && <span className="project-domain">{project.domain}</span>}
+                </div>
               </div>
-              <div className="skill-progress">
-                <div
-                  className="progress-bar"
-                  style={{ width: isVisible ? `${skill.level}%` : '0%' }}
-                  aria-valuenow={skill.level}
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+
+              <div className="project-tech">
+                <strong>Tech Stack:</strong>
+                <div className="tech-tags">
+                  {project.techStack.map((tech, i) => (
+                    <span key={i} className="tech-tag">{tech}</span>
+                  ))}
+                </div>
               </div>
-              <span className="skill-category">{skill.category}</span>
+
+              <ul className="project-highlights">
+                {project.highlights.map((highlight, i) => (
+                  <li key={i}>{highlight}</li>
+                ))}
+              </ul>
+
+              <div className="project-tags">
+                {project.tags.map((tag, i) => (
+                  <span key={i} className="project-tag">{tag}</span>
+                ))}
+              </div>
             </div>
           );
         })}
@@ -115,4 +128,4 @@ const Skills = () => {
   );
 };
 
-export default Skills;
+export default Projects;

@@ -11,6 +11,8 @@ const Skills = () => {
   const categories = [...new Set(skills.map(skill => skill.category))];
 
   useEffect(() => {
+    const currentSection = sectionRef.current;
+
     const sectionObserver = new IntersectionObserver(
       ([entry]) => {
         setIsSectionVisible(entry.isIntersecting);
@@ -38,16 +40,16 @@ const Skills = () => {
       }
     );
 
-    if (sectionRef.current) {
-      sectionObserver.observe(sectionRef.current);
-      const cards = sectionRef.current.querySelectorAll('.skill-card');
+    if (currentSection) {
+      sectionObserver.observe(currentSection);
+      const cards = currentSection.querySelectorAll('.skill-card');
       cards.forEach(card => skillObserver.observe(card));
     }
 
     return () => {
-      if (sectionRef.current) {
+      if (currentSection) {
         sectionObserver.disconnect();
-        const cards = sectionRef.current.querySelectorAll('.skill-card');
+        const cards = currentSection.querySelectorAll('.skill-card');
         cards.forEach(card => skillObserver.unobserve(card));
       }
     };
