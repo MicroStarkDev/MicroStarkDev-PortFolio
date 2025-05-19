@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../components/CSS/Skills.css';
-import { skills } from '../constants'; // Importing skills data
+import { skills } from '../constants';
 
 const Skills = () => {
   const sectionRef = useRef(null);
   const [visibleSkills, setVisibleSkills] = useState([]);
   const [isSectionVisible, setIsSectionVisible] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('All');
 
   const categories = [...new Set(skills.map(skill => skill.category))];
-  const [activeCategory, setActiveCategory] = useState('All');
 
   useEffect(() => {
     const sectionObserver = new IntersectionObserver(
@@ -19,17 +19,22 @@ const Skills = () => {
     );
 
     const skillObserver = new IntersectionObserver(
-      (entries) => {
+      entries => {
         entries.forEach(entry => {
           const skillName = entry.target.getAttribute('data-skill-name');
           if (entry.isIntersecting && skillName) {
-            setVisibleSkills(prev => [...new Set([...prev, skillName])]);
+            setVisibleSkills(prev => {
+              if (!prev.includes(skillName)) {
+                return [...prev, skillName];
+              }
+              return prev;
+            });
           }
         });
       },
       {
         threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -50px 0px',
       }
     );
 
@@ -41,20 +46,21 @@ const Skills = () => {
 
     return () => {
       if (sectionRef.current) {
-        sectionObserver.unobserve(sectionRef.current);
+        sectionObserver.disconnect();
         const cards = sectionRef.current.querySelectorAll('.skill-card');
         cards.forEach(card => skillObserver.unobserve(card));
       }
     };
   }, []);
 
-  const filteredSkills = activeCategory === 'All' 
-    ? skills 
-    : skills.filter(skill => skill.category === activeCategory);
+  const filteredSkills =
+    activeCategory === 'All'
+      ? skills
+      : skills.filter(skill => skill.category === activeCategory);
 
   return (
-    <section 
-      id="skills" 
+    <section
+      id="skills"
       ref={sectionRef}
       className={`skills section ${isSectionVisible ? 'visible' : ''}`}
       aria-labelledby="skills-heading"
@@ -64,13 +70,7 @@ const Skills = () => {
       </div>
 
       <div className="skills-filter">
-        <button 
-          className={`filter-btn ${activeCategory === 'All' ? 'active' : ''}`}
-          onClick={() => setActiveCategory('All')}
-        >
-          All
-        </button>
-        {categories.map(category => (
+        {['All', ...categories].map(category => (
           <button
             key={category}
             className={`filter-btn ${activeCategory === category ? 'active' : ''}`}
@@ -85,7 +85,7 @@ const Skills = () => {
         {filteredSkills.map((skill, index) => {
           const isVisible = visibleSkills.includes(skill.name);
           return (
-            <div 
+            <div
               key={skill.name}
               data-skill-name={skill.name}
               className={`skill-card ${isVisible ? 'visible' : ''}`}
@@ -96,8 +96,8 @@ const Skills = () => {
                 <span className="skill-level">{skill.level}%</span>
               </div>
               <div className="skill-progress">
-                <div 
-                  className="progress-bar" 
+                <div
+                  className="progress-bar"
                   style={{ width: isVisible ? `${skill.level}%` : '0%' }}
                   aria-valuenow={skill.level}
                   aria-valuemin="0"
