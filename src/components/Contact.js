@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 import '../components/CSS/Contact.css';
 import { showAlert } from '../constants';
+
 const Contact = () => {
   const sectionRef = useRef(null);
   const formRef = useRef(null);
@@ -19,12 +20,13 @@ const Contact = () => {
 
   // Section fade-in animation
   useEffect(() => {
+    const currentSection = sectionRef.current; // store ref locally
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
       { threshold: 0.3, rootMargin: '0px 0px -50px 0px' }
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => sectionRef.current && observer.unobserve(sectionRef.current);
+    if (currentSection) observer.observe(currentSection);
+    return () => currentSection && observer.unobserve(currentSection);
   }, []);
 
   // Field validation
@@ -70,24 +72,17 @@ const Contact = () => {
   // Form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Prevent multiple submissions
+
     if (isSubmitting || isButtonDisabled) return;
-    
-    // Disable button immediately
     setIsButtonDisabled(true);
-    
-    // Validate form
+
     if (!validateForm()) {
       setIsButtonDisabled(false);
       return;
     }
 
     setIsSubmitting(true);
-    const currentTime = new Date().toLocaleTimeString([], { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
+    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     try {
       const response = await emailjs.send(

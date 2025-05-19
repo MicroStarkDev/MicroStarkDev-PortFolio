@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../components/CSS/Experience.css';
 import { experienceData } from '../constants'; // Importing experience data
+
 const Experience = () => {
   const itemsRef = useRef([]);
   const sectionRef = useRef(null);
@@ -8,6 +9,8 @@ const Experience = () => {
   const [isSectionVisible, setIsSectionVisible] = useState(false);
 
   useEffect(() => {
+    const currentSection = sectionRef.current; // store locally
+
     const sectionObserver = new IntersectionObserver(
       ([entry]) => {
         setIsSectionVisible(entry.isIntersecting);
@@ -15,8 +18,8 @@ const Experience = () => {
       { threshold: 0.2 }
     );
 
-    if (sectionRef.current) {
-      sectionObserver.observe(sectionRef.current);
+    if (currentSection) {
+      sectionObserver.observe(currentSection);
     }
 
     const itemObserver = new IntersectionObserver(
@@ -28,25 +31,24 @@ const Experience = () => {
           }
         });
       },
-      { 
+      {
         threshold: 0.3,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -50px 0px',
       }
     );
 
+    // Observe only existing refs
     itemsRef.current.forEach((el) => el && itemObserver.observe(el));
 
     return () => {
-      sectionRef.current && sectionObserver.unobserve(sectionRef.current);
+      if (currentSection) sectionObserver.unobserve(currentSection);
       itemsRef.current.forEach((el) => el && itemObserver.unobserve(el));
     };
   }, []);
 
-  
-
   return (
-    <section 
-      id="experience" 
+    <section
+      id="experience"
       ref={sectionRef}
       className={`experience section ${isSectionVisible ? 'visible' : ''}`}
       aria-labelledby="experience-heading"
@@ -58,11 +60,16 @@ const Experience = () => {
         {experienceData.map((item, index) => (
           <div
             key={index}
-           className={`timeline-item 
-  ${visibleItems.includes(index) ? 'visible' : ''} 
-  ${visibleItems.includes(index) && isSectionVisible ? (index % 2 === 0 ? 'animate__animated animate__flipInX' : 'animate__animated animate__flipInY') : ''} 
-  animate__delay-${index}s`}
-
+            className={`timeline-item 
+              ${visibleItems.includes(index) ? 'visible' : ''} 
+              ${
+                visibleItems.includes(index) && isSectionVisible
+                  ? index % 2 === 0
+                    ? 'animate__animated animate__flipInX'
+                    : 'animate__animated animate__flipInY'
+                  : ''
+              } 
+              animate__delay-${index}s`}
             ref={(el) => (itemsRef.current[index] = el)}
             aria-labelledby={`experience-${index}`}
           >
@@ -77,7 +84,9 @@ const Experience = () => {
               {item.skills && (
                 <div className="experience-skills">
                   {item.skills.map((skill, i) => (
-                    <span key={i} className="skill-tag">{skill}</span>
+                    <span key={i} className="skill-tag">
+                      {skill}
+                    </span>
                   ))}
                 </div>
               )}

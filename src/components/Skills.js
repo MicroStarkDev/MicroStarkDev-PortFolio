@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../components/CSS/Skills.css';
-import {skills} from '../constants'; // Importing skills data
+import { skills } from '../constants'; // Importing skills data
+
 const Skills = () => {
   const sectionRef = useRef(null);
   const [visibleSkills, setVisibleSkills] = useState([]);
   const [isSectionVisible, setIsSectionVisible] = useState(false);
-
-
 
   const categories = [...new Set(skills.map(skill => skill.category))];
   const [activeCategory, setActiveCategory] = useState('All');
@@ -22,11 +21,9 @@ const Skills = () => {
     const skillObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
-          const index = Array.from(sectionRef.current.querySelectorAll('.skill-card'))
-            .indexOf(entry.target);
-          
-          if (entry.isIntersecting) {
-            setVisibleSkills(prev => [...new Set([...prev, index])]);
+          const skillName = entry.target.getAttribute('data-skill-name');
+          if (entry.isIntersecting && skillName) {
+            setVisibleSkills(prev => [...new Set([...prev, skillName])]);
           }
         });
       },
@@ -85,28 +82,32 @@ const Skills = () => {
       </div>
 
       <div className="skills-container">
-        {filteredSkills.map((skill, index) => (
-          <div 
-            key={index}
-            className={`skill-card ${visibleSkills.includes(index) ? 'visible' : ''}`}
-            style={{ transitionDelay: `${index * 0.05}s` }}
-          >
-            <div className="skill-info">
-              <span className="skill-name">{skill.name}</span>
-              <span className="skill-level">{skill.level}%</span>
+        {filteredSkills.map((skill, index) => {
+          const isVisible = visibleSkills.includes(skill.name);
+          return (
+            <div 
+              key={skill.name}
+              data-skill-name={skill.name}
+              className={`skill-card ${isVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${index * 0.05}s` }}
+            >
+              <div className="skill-info">
+                <span className="skill-name">{skill.name}</span>
+                <span className="skill-level">{skill.level}%</span>
+              </div>
+              <div className="skill-progress">
+                <div 
+                  className="progress-bar" 
+                  style={{ width: isVisible ? `${skill.level}%` : '0%' }}
+                  aria-valuenow={skill.level}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+              <span className="skill-category">{skill.category}</span>
             </div>
-            <div className="skill-progress">
-              <div 
-                className="progress-bar" 
-                style={{ width: `${visibleSkills.includes(index) ? skill.level : 0}%` }}
-                aria-valuenow={skill.level}
-                aria-valuemin="0"
-                aria-valuemax="100"
-              ></div>
-            </div>
-            <span className="skill-category">{skill.category}</span>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 {
   "name": "sandeep-portfolio",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": true,
   "description": "My personal portfolio website built with React, showcasing my projects, skills, and contact information.",
   "author": "Sandeep Kumar Samal (MicroStarkDev)",
@@ -11,11 +11,7 @@
   "homepage": "https://microstarkdev.github.io/MicroStarkDev-PortFolio",
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
-    "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^14.3.1",
-    "@testing-library/user-event": "^14.4.3",
     "animate.css": "^4.1.1",
-    "emailjs-com": "^3.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
@@ -23,7 +19,15 @@
     "web-vitals": "^3.1.1"
   },
   "devDependencies": {
-    "gh-pages": "^5.0.0"
+    "@babel/eslint-parser": "^7.23.3",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.2.1",
+    "@testing-library/user-event": "^14.5.2",
+    "eslint": "^8.56.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "gh-pages": "^6.1.0",
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -31,13 +35,26 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "lint": "eslint src",
+    "fix-deps": "rm -rf node_modules package-lock.json && npm install --legacy-peer-deps"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "babelOptions": {
+        "presets": [
+          [
+            "babel-preset-react-app",
+            false
+          ]
+        ]
+      }
+    }
   },
   "browserslist": {
     "production": [
@@ -50,5 +67,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "eslint-config-react-app": {
+      "@typescript-eslint/eslint-plugin": "^6.0.0",
+      "@typescript-eslint/parser": "^6.0.0"
+    }
   }
 }

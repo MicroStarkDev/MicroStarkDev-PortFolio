@@ -9,6 +9,8 @@ const Projects = () => {
   const [visibleCards, setVisibleCards] = useState([]);
 
   useEffect(() => {
+    const currentSection = sectionRef.current;
+
     // Observe the whole section for visibility
     const sectionObserver = new IntersectionObserver(
       ([entry]) => {
@@ -19,13 +21,13 @@ const Projects = () => {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      sectionObserver.observe(sectionRef.current);
+    if (currentSection) {
+      sectionObserver.observe(currentSection);
     }
 
     return () => {
-      if (sectionRef.current) {
-        sectionObserver.unobserve(sectionRef.current);
+      if (currentSection) {
+        sectionObserver.unobserve(currentSection);
       }
     };
   }, []);
@@ -33,28 +35,32 @@ const Projects = () => {
   useEffect(() => {
     if (!sectionVisible) return;
 
+    const currentSection = sectionRef.current;
+    if (!currentSection) return;
+
+    // Observe each project card to trigger animation on visibility
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach(entry => {
-          const index = Array.from(sectionRef.current.querySelectorAll('.project-card'))
-            .indexOf(entry.target);
+        entries.forEach((entry) => {
+          const cards = Array.from(currentSection.querySelectorAll('.project-card'));
+          const index = cards.indexOf(entry.target);
 
-          if (entry.isIntersecting) {
-            setVisibleCards(prev => [...new Set([...prev, index])]);
+          if (entry.isIntersecting && index !== -1) {
+            setVisibleCards((prev) => [...new Set([...prev, index])]);
           }
         });
       },
       {
         threshold: 0.2,
-        rootMargin: '0px 0px -100px 0px'
+        rootMargin: '0px 0px -100px 0px',
       }
     );
 
-    const cards = sectionRef.current.querySelectorAll('.project-card');
-    cards.forEach(card => observer.observe(card));
+    const cards = currentSection.querySelectorAll('.project-card');
+    cards.forEach((card) => observer.observe(card));
 
     return () => {
-      cards.forEach(card => observer.unobserve(card));
+      cards.forEach((card) => observer.unobserve(card));
     };
   }, [sectionVisible]);
 
@@ -90,9 +96,7 @@ const Projects = () => {
                 <h3>{project.title}</h3>
                 <div className="project-meta">
                   <span className="project-duration">{project.duration}</span>
-                  {project.domain && (
-                    <span className="project-domain">{project.domain}</span>
-                  )}
+                  {project.domain && <span className="project-domain">{project.domain}</span>}
                 </div>
               </div>
 
