@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/MicroStarkDev-PortFolio/static/css/main.33f47c5f.css",
-    "main.js": "/MicroStarkDev-PortFolio/static/js/main.2d877fce.js",
+    "main.js": "/MicroStarkDev-PortFolio/static/js/main.6e719d32.js",
     "static/js/488.21b970f5.chunk.js": "/MicroStarkDev-PortFolio/static/js/488.21b970f5.chunk.js",
     "static/media/day-bg.jpg": "/MicroStarkDev-PortFolio/static/media/day-bg.13de23a7519be03ac3e5.jpg",
     "static/media/night-bg.jpg": "/MicroStarkDev-PortFolio/static/media/night-bg.64a288d2811e896c38d7.jpg",
     "index.html": "/MicroStarkDev-PortFolio/index.html",
     "main.33f47c5f.css.map": "/MicroStarkDev-PortFolio/static/css/main.33f47c5f.css.map",
-    "main.2d877fce.js.map": "/MicroStarkDev-PortFolio/static/js/main.2d877fce.js.map",
+    "main.6e719d32.js.map": "/MicroStarkDev-PortFolio/static/js/main.6e719d32.js.map",
     "488.21b970f5.chunk.js.map": "/MicroStarkDev-PortFolio/static/js/488.21b970f5.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.33f47c5f.css",
-    "static/js/main.2d877fce.js"
+    "static/js/main.6e719d32.js"
   ]
 }
