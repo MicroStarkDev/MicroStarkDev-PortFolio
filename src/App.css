@@ -58,7 +58,7 @@ label.required::after {
 }
 
 .custom-alert-box {
-  background: #fff;
+  background: var(--hero-text);
   padding: 30px 40px;
   border-radius: 16px;
   position: relative;

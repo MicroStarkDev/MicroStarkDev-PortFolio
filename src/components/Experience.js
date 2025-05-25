@@ -69,7 +69,7 @@ const Experience = () => {
                     : 'animate__animated animate__flipInY'
                   : ''
               } 
-              animate__delay-${index}s`}
+              animate__delay-${index-1}s`}
             ref={(el) => (itemsRef.current[index] = el)}
             aria-labelledby={`experience-${index}`}
           >
